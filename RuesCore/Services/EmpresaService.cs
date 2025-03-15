@@ -45,6 +45,10 @@ public class EmpresaService
     {
         return await _empresaRepository.GetAllEmpresasResponseAsync();
     }
+    public async Task<IEnumerable<EmpresaResponseDto>> GetEmpresasResponseByIdAsync()
+    {
+        return await _empresaRepository.GetAllEmpresasResponseAsync();
+    }
     
     public async Task AddEmpresaConRepresentanteAsync(EmpresaConRepresentanteLegalDto dto)
     {

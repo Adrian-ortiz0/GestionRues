@@ -1,19 +1,74 @@
 ﻿@page
 @model GestionRues.Pages.Busqueda
-
 @{
-    Layout = null;
+    Layout = "Shared/_Layout";
 }
 
 <!DOCTYPE html>
-
 <html>
 <head>
-    <title></title>
+    <meta charset="utf-8" />
+    <title>Búsqueda de Empresa</title>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+        }
+        .card-container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        .card-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+    </style>
 </head>
 <body>
-<div>
-    Busqueda
+<div class="card-container">
+    <div class="card-title">Detalle de Empresa</div>
+    <div id="companyForm"></div>
 </div>
+
+<script>
+    $(function(){
+        $("#companyForm").dxForm({
+            readOnly: true,
+            items: [
+                { dataField: "identificacion", label: { text: "Identificación" } },
+                { dataField: "nombre", label: { text: "Nombre" } },
+                { dataField: "categoriaDeMatricula", label: { text: "Categoría Matrícula" } },
+                { dataField: "tipoDeSociedad", label: { text: "Tipo de Sociedad" } },
+                { dataField: "tipoDeOrganizacion", label: { text: "Tipo de Organización" } },
+                { dataField: "numeroDeMatricula", label: { text: "Número de Matrícula" } },
+                { dataField: "camaraDeComercio", label: { text: "Cámara de Comercio" } },
+                { dataField: "fechaDeMatricula", label: { text: "Fecha de Matrícula" }, editorType: "dxDateBox", editorOptions: { disabled: true } },
+                { dataField: "estadoMatricula", label: { text: "Estado Matrícula" } },
+                { dataField: "actividadesEconomicas", label: { text: "Actividades Económicas" } },
+                { dataField: "representanteLegal", label: { text: "Representante Legal" } },
+                { dataField: "representanteLegalDocumento", label: { text: "Documento Representante" } }
+            ]
+        });
+
+        $.ajax({
+            url: "/Busqueda?handler=EmpresasResponse",
+            type: "GET",
+            success: function(response) {
+                var data = Array.isArray(response) ? response[0] : response;
+
+                $("#companyForm").dxForm("instance").option("formData", data);
+            },
+            error: function() {
+                DevExpress.ui.notify("Error al obtener los datos de la empresa.", "error", 2000);
+            }
+        });
+    });
+</script>
 </body>
 </html>
