@@ -1,8 +1,167 @@
 ﻿@page
 @model GestionRues.Pages.Registro
-
 @{
-    Layout = null;
+    Layout = "_Layout"; 
 }
 
-<h2>Gestion empresas</h2>
+<h2>Gestión Empresas</h2>
+
+<div id="empresaForm"></div>
+<br />
+<div id="btnSubmit"></div>
+
+@section Scripts {
+    <script>
+        $(function(){
+            var formData = {
+                identificacion: "",
+                nombre: "",
+                categoriaMatriculaId: null,
+                tipoDeSociedadId: null,
+                tipoDeOrganizacionId: null,
+                numeroDeMatricula: null,
+                camaraDeComercio: "",
+                fechaDeMatricula: new Date(),
+                estadoMatriculaId: null,
+                actividadesEconomicas: [],
+                representanteLegal: {
+                    nombre: "",
+                    apellido: "",
+                    tipoDocumentoId: null,
+                    documento: "",
+                    telefono: "",
+                    correo: "",
+                    cargoDeLaEmpresa: "",
+                    fechaDeNombramiento: new Date()
+                }
+            };
+            var categoriaMatriculaSelectBox = {
+                editorType: "dxSelectBox",
+                dataField: "categoriaMatriculaId",
+                editorOptions: {
+                    dataSource: "/Registro?handler=CategoriaDeMatricula",
+                    displayExpr: "nombre",
+                    valueExpr: "id",
+                    placeholder: "Seleccione categoría"
+                },
+                label: { text: "Categoría Matrícula" }
+            };
+            var tipoSociedadSelectBox = {
+                editorType: "dxSelectBox",
+                dataField: "tipoDeSociedadId",
+                editorOptions: {
+                    dataSource: "/Registro?handler=TiposDeSociedad",
+                    displayExpr: "nombre",
+                    valueExpr: "id",
+                    placeholder: "Seleccione tipo de sociedad"
+                },
+                label: { text: "Tipo de Sociedad" }
+            };
+            var tipoOrganizacionSelectBox = {
+                editorType: "dxSelectBox",
+                dataField: "tipoDeOrganizacionId",
+                editorOptions: {
+                    dataSource: "/Registro?handler=TiposDeOrganizacion",
+                    displayExpr: "nombre",
+                    valueExpr: "id",
+                    placeholder: "Seleccione tipo de organización"
+                },
+                label: { text: "Tipo de Organización" }
+            };
+            var estadoMatriculaSelectBox = {
+                editorType: "dxSelectBox",
+                dataField: "estadoMatriculaId",
+                editorOptions: {
+                    dataSource: "/Registro?handler=EstadosMatricula",
+                    displayExpr: "nombre",
+                    valueExpr: "id",
+                    placeholder: "Seleccione estado"
+                },
+                label: { text: "Estado Matrícula" }
+            };
+            var actividadesEconomicasTagBox = {
+                editorType: "dxTagBox",
+                dataField: "actividadesEconomicas",
+                editorOptions: {
+                    dataSource: "/Registro?handler=ActividadesEconomicas",
+                    displayExpr: "nombre",
+                    valueExpr: "id",
+                    placeholder: "Seleccione actividades",
+                    showClearButton: true
+                },
+                label: { text: "Actividades Económicas" }
+            };
+
+            var representanteLegalGroup = {
+                itemType: "group",
+                caption: "Datos del Representante Legal",
+                items: [
+                    { dataField: "representanteLegal.nombre", label: { text: "Nombre" } },
+                    { dataField: "representanteLegal.apellido", label: { text: "Apellido" } },
+                    { dataField: "representanteLegal.tipoDocumentoId", 
+                      editorType: "dxSelectBox",
+                      editorOptions: {
+                          dataSource: "/Registro?handler=TiposDocumentos",
+                          displayExpr: "nombre",
+                          valueExpr: "id",
+                          placeholder: "Seleccione tipo de documento"
+                      },
+                      label: { text: "Tipo de Documento" } 
+                    },
+                    { dataField: "representanteLegal.documento", label: { text: "Documento" } },
+                    { dataField: "representanteLegal.telefono", label: { text: "Teléfono" } },
+                    { dataField: "representanteLegal.correo", label: { text: "Correo" } },
+                    { dataField: "representanteLegal.cargoDeLaEmpresa", label: { text: "Cargo" } },
+                    { dataField: "representanteLegal.fechaDeNombramiento", 
+                      editorType: "dxDateBox",
+                      label: { text: "Fecha de Nombramiento" } }
+                ]
+            };
+
+            $("#empresaForm").dxForm({
+                formData: formData,
+                items: [
+                    {
+                        itemType: "group",
+                        caption: "Datos de la Empresa",
+                        items: [
+                            { dataField: "identificacion", label: { text: "Identificación" } },
+                            { dataField: "nombre", label: { text: "Nombre" } },
+                            categoriaMatriculaSelectBox,
+                            tipoSociedadSelectBox,
+                            tipoOrganizacionSelectBox,
+                            { dataField: "numeroDeMatricula", label: { text: "Número de Matrícula" } },
+                            { dataField: "camaraDeComercio", label: { text: "Cámara de Comercio" } },
+                            { dataField: "fechaDeMatricula", editorType: "dxDateBox", label: { text: "Fecha de Matrícula" } },
+                            estadoMatriculaSelectBox,
+                            actividadesEconomicasTagBox
+                        ]
+                    },
+                    representanteLegalGroup
+                ]
+            });
+
+            $("#btnSubmit").dxButton({
+                text: "Agregar Empresa",
+                onClick: function(){
+                    var formInstance = $("#empresaForm").dxForm("instance");
+                    var data = formInstance.option("formData");
+
+                    $.ajax({
+                        url: "/Registro?handler=AddEmpresaConRepresentante",
+                        type: "POST",
+                        contentType: "application/json",
+                        data: JSON.stringify(data),
+                        success: function(response){
+                            DevExpress.ui.notify(response.message, "success", 2000);
+                            loadEmpresas(); 
+                        },
+                        error: function(){
+                            DevExpress.ui.notify("Error al agregar la empresa.", "error", 2000);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
