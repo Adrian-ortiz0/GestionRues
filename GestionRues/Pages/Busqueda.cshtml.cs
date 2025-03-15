@@ -9,28 +9,12 @@ namespace GestionRues.Pages;
 public class Busqueda : PageModel
 {
     private readonly EmpresaService _empresaService;
-    private readonly TipoDocumentoService _tipoDocumentoService;
-    private readonly CategoriaDeMatriculaService _categoriaDeMatriculaService;
-    private readonly TipoDeSociedadService _tipoDeSociedadService;
-    private readonly TipoDeOrganizacionService _tipoDeOrganizacionService;
-    private readonly EstadoMatriculaService _estadoMatriculaService;
-    private readonly ActividadEconomicaService _actividadEconomicaService;
 
-    public Busqueda(EmpresaService empresaService, 
-        TipoDocumentoService tipoDocumentoService, 
-        CategoriaDeMatriculaService categoriaDeMatriculaService, 
-        TipoDeSociedadService tipoDeSociedadService,
-        TipoDeOrganizacionService tipoDeOrganizacionService,
-        EstadoMatriculaService estadoMatriculaService,
-        ActividadEconomicaService actividadEconomicaService)
+
+    public Busqueda(EmpresaService empresaService)
     {
         _empresaService = empresaService;
-        _tipoDocumentoService = tipoDocumentoService;
-        _categoriaDeMatriculaService = categoriaDeMatriculaService;
-        _tipoDeSociedadService = tipoDeSociedadService;
-        _tipoDeOrganizacionService = tipoDeOrganizacionService;
-        _estadoMatriculaService = estadoMatriculaService;
-        _actividadEconomicaService = actividadEconomicaService;
+
     }
 
     public async Task<IActionResult> OnGetEmpresasAsync()
