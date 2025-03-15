@@ -102,7 +102,7 @@
                                     .done(function(result) {
                                         if(result) {
                                             $.ajax({
-                                                url: `/Busqueda?handler=DeleteEmpresa&id=${id}`,
+                                                url: `/Registro?handler=DeleteEmpresa&id=${id}`,
                                                 method: "POST"
                                             }).done(function() {
                                                 DevExpress.ui.notify("Empresa eliminada correctamente", "success", 2000);
