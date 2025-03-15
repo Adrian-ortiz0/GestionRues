@@ -6,7 +6,7 @@ namespace RuesCore.Services;
 
 public class EmpresaService
 {
-    private readonly IEmpresaRespository  _empresaRepository;
+    private readonly IEmpresaRespository _empresaRepository;
     private readonly ICategoriaDeMatriculaRepository _categoriaDeMatriculaRepository;
     private readonly ITipoDeSociedadRepository _tipoDeSociedadRepository;
     private readonly ITipoDeOrganizacionRepository _tipoDeOrganizacionRepository;
@@ -40,17 +40,18 @@ public class EmpresaService
     {
         return await _empresaRepository.GetAllEmpresasAsync();
     }
-    
+
     public async Task<IEnumerable<EmpresaResponseDto>> GetAllEmpresasResponseAsync()
     {
         return await _empresaRepository.GetAllEmpresasResponseAsync();
     }
-    public async Task<IEnumerable<EmpresaResponseDto>> GetEmpresasResponseByIdAsync()
+
+    public async Task<EmpresaResponseDto> GetEmpresaResponseByNombreAsync(string nombre)
     {
-        return await _empresaRepository.GetAllEmpresasResponseAsync();
+        return await _empresaRepository.GetEmpresaResponseByNombreAsync(nombre);
     }
-    
-    public async Task AddEmpresaConRepresentanteAsync(EmpresaConRepresentanteLegalDto dto)
+
+public async Task AddEmpresaConRepresentanteAsync(EmpresaConRepresentanteLegalDto dto)
     {
     
     var categoria = await _categoriaDeMatriculaRepository.GetCategoriaDeMatriculaByIdAsync(dto.CategoriaMatriculaId);

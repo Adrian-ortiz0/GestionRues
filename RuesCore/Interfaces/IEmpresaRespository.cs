@@ -11,4 +11,5 @@ public interface IEmpresaRespository
     Task AddEmpresaAsync(Empresa empresa);
     Task UpdateEmpresaAsync(Empresa empresa);
     Task DeleteEmpresaAsync(int id);
+    Task<EmpresaResponseDto> GetEmpresaResponseByNombreAsync(string nombre);
 }

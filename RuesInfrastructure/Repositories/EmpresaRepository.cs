@@ -81,4 +81,27 @@ public class EmpresaRepository : IEmpresaRespository
             await _context.SaveChangesAsync();
         }
     }
+
+    public async Task<EmpresaResponseDto> GetEmpresaResponseByNombreAsync(string nombre)
+    {
+        return await _context.Empresas
+            .Where(e => e.Nombre.ToLower() == nombre.ToLower())
+            .Select(e => new EmpresaResponseDto
+            {
+                Id = e.Id,
+                Identificacion = e.Identificacion,
+                Nombre = e.Nombre,
+                CategoriaDeMatricula = e.CategoriaDeMatricula != null ? e.CategoriaDeMatricula.Nombre : "",
+                TipoDeSociedad = e.TipoDeSociedad != null ? e.TipoDeSociedad.Nombre : "",
+                TipoDeOrganizacion = e.TipoDeOrganizacion != null ? e.TipoDeOrganizacion.Nombre : "",
+                NumeroDeMatricula = e.NumeroDeMatricula,
+                CamaraDeComercio = e.CamaraDeComercio,
+                FechaDeMatricula = e.FechaDeMatricula,
+                EstadoMatricula = e.EstadoMatricula != null ? e.EstadoMatricula.Nombre : "",
+                ActividadesEconomicas = e.ActividadesEconomicas.Select(a => a.Nombre).ToList(),
+                RepresentanteLegal = e.RepresentanteLegal != null ? $"{e.RepresentanteLegal.Nombre} {e.RepresentanteLegal.Apellido}" : "",
+                RepresentanteLegalDocumento = e.RepresentanteLegal != null ? e.RepresentanteLegal.Documento : ""
+            })
+            .FirstOrDefaultAsync();
+    }
 }

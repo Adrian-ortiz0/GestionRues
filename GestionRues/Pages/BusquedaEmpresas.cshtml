@@ -1,0 +1,84 @@
+﻿@page
+@model GestionRues.Pages.BusquedaEmpresas
+
+@{
+    Layout = "Shared/_Layout";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Búsqueda de Empresas</title>
+    <style>
+        .search-container {
+            max-width: 800px;
+            margin: 30px auto;
+        }
+        .result-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="search-container">
+    <h2>Buscar Empresa por Nombre</h2>
+    <div id="searchBox"></div>
+    <div id="searchButton" style="margin-top: 10px;"></div>
+    <div id="result" class="result-container"></div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function(){
+            $("#searchBox").dxTextBox({
+                placeholder: "Ingrese el nombre de la empresa"
+            });
+
+            $("#searchButton").dxButton({
+                text: "Buscar",
+                onClick: function(){
+                    var nombre = $("#searchBox").dxTextBox("instance").option("value");
+                    if(nombre) {
+                        $.ajax({
+                            url: "/Busqueda?handler=EmpresaByNombre",
+                            type: "GET",
+                            data: { nombre: nombre },
+                            success: function(response) {
+                                $("#result").empty();
+                                if(response) {
+                                    $("#result").dxForm({
+                                        readOnly: true,
+                                        formData: response,
+                                        items: [
+                                            { dataField: "identificacion", label: { text: "Identificación" } },
+                                            { dataField: "nombre", label: { text: "Nombre" } },
+                                            { dataField: "categoriaDeMatricula", label: { text: "Categoría Matrícula" } },
+                                            { dataField: "tipoDeSociedad", label: { text: "Tipo de Sociedad" } },
+                                            { dataField: "tipoDeOrganizacion", label: { text: "Tipo de Organización" } },
+                                            { dataField: "numeroDeMatricula", label: { text: "Número de Matrícula" } },
+                                            { dataField: "camaraDeComercio", label: { text: "Cámara de Comercio" } },
+                                            { dataField: "fechaDeMatricula", label: { text: "Fecha de Matrícula" }, editorType: "dxDateBox", editorOptions: { disabled: true } },
+                                            { dataField: "estadoMatricula", label: { text: "Estado Matrícula" } },
+                                            { dataField: "actividadesEconomicas", label: { text: "Actividades Económicas" } },
+                                            { dataField: "representanteLegal", label: { text: "Representante Legal" } },
+                                            { dataField: "representanteLegalDocumento", label: { text: "Documento Representante" } }
+                                        ]
+                                    });
+                                } else {
+                                    DevExpress.ui.notify("No se encontró ninguna empresa con ese nombre.", "info", 2000);
+                                }
+                            },
+                            error: function(){
+                                DevExpress.ui.notify("Error al realizar la búsqueda.", "error", 2000);
+                            }
+                        });
+                    } else {
+                        DevExpress.ui.notify("Ingrese un nombre para buscar.", "warning", 2000);
+                    }
+                }
+            });
+        });
+    </script>
+}
+</body>
+</html>

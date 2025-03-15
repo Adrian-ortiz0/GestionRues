@@ -164,4 +164,13 @@ public class Busqueda : PageModel
         var actividadEconomica = await _actividadEconomicaService.GetActividadEconomicaByIdAsync(id);
         return new JsonResult(actividadEconomica);
     }
+    public async Task<IActionResult> OnGetEmpresaByNombreAsync([FromQuery] string nombre)
+    {
+        var empresaDto = await _empresaService.GetEmpresaResponseByNombreAsync(nombre);
+        if (empresaDto == null)
+        {
+            return NotFound();
+        }
+        return new JsonResult(empresaDto);
+    }
 }
