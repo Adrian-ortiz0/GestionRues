@@ -17,12 +17,14 @@ builder.Services.AddScoped<ICategoriaDeMatriculaRepository, CategoriaDeMatricula
 builder.Services.AddScoped<ITipoDeSociedadRepository, TipoDeSociedadRepository>();
 builder.Services.AddScoped<ITipoDeOrganizacionRepository, TipoDeOrganizacionRepository>();
 builder.Services.AddScoped<IEstadoMatriculaRepository, EstadoMatriculaRepository>();
+builder.Services.AddScoped<IActividadEconomicaRepository, ActividadEconomicaRepository>();
 builder.Services.AddScoped<CategoriaDeMatriculaService>();
 builder.Services.AddScoped<TipoDocumentoService>();
 builder.Services.AddScoped<EmpresaService>();
 builder.Services.AddScoped<TipoDeSociedadService>();
 builder.Services.AddScoped<TipoDeOrganizacionService>();
 builder.Services.AddScoped<EstadoMatriculaService>();
+builder.Services.AddScoped<ActividadEconomicaService>();
 
 var app = builder.Build();
 

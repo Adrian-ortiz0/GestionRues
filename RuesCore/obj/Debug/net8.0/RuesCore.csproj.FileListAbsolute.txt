@@ -9,3 +9,4 @@ C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\obj\Debug\net8.0\R
 C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\obj\Debug\net8.0\refint\RuesCore.dll
 C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\obj\Debug\net8.0\RuesCore.pdb
 C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\obj\Debug\net8.0\ref\RuesCore.dll
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\obj\Debug\net8.0\RuesCore.sourcelink.json

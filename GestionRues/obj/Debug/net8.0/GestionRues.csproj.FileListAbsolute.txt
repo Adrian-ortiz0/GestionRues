@@ -146,3 +146,4 @@ C:\Users\Danie\Documents\NetCoreProjects\GestionRues\GestionRues\obj\Debug\net8.
 C:\Users\Danie\Documents\NetCoreProjects\GestionRues\GestionRues\obj\Debug\net8.0\GestionRues.pdb
 C:\Users\Danie\Documents\NetCoreProjects\GestionRues\GestionRues\obj\Debug\net8.0\GestionRues.genruntimeconfig.cache
 C:\Users\Danie\Documents\NetCoreProjects\GestionRues\GestionRues\obj\Debug\net8.0\ref\GestionRues.dll
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\GestionRues\obj\Debug\net8.0\GestionRues.sourcelink.json

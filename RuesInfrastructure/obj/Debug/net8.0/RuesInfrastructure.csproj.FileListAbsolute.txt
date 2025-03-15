@@ -15,3 +15,4 @@ C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debu
 C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\RuesInfrastructure.pdb
 C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\RuesInfrastructure.genruntimeconfig.cache
 C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\ref\RuesInfrastructure.dll
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\RuesInfrastructure.sourcelink.json

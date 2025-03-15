@@ -1,18 +1,13 @@
-﻿using System.Text.Json.Serialization;
+﻿namespace RuesCore.Models.DTOs;
 
-namespace RuesCore.Models.Entities;
-
-public class RepresentanteLegal
+public class RepresentanteLegalDto
 {
-    public int Id { get; set; }
     public string Nombre { get; set; }
     public string Apellido { get; set; }
-    public TipoDocumento TipoDocumento { get; set; }
+    public int TipoDocumentoId { get; set; }
     public string Documento { get; set; }
     public string Telefono { get; set; }
     public string Correo { get; set; }
     public string CargoDeLaEmpresa { get; set; }
     public DateTime FechaDeNombramiento { get; set; }
-    [JsonIgnore]
-    public List<Empresa> Empresas { get; set; }
 }
