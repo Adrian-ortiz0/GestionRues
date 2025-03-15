@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GestionRues", "GestionRues\GestionRues.csproj", "{170026AC-2180-478D-8E0A-DE5BE6CC6912}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuesCore", "RuesCore\RuesCore.csproj", "{7B12C1E8-C1D2-40FF-8855-D3D5765EB334}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RuesInfrastructure", "RuesInfrastructure\RuesInfrastructure.csproj", "{77F7D584-48DD-42DA-846B-F2A637A62699}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{170026AC-2180-478D-8E0A-DE5BE6CC6912}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{170026AC-2180-478D-8E0A-DE5BE6CC6912}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{170026AC-2180-478D-8E0A-DE5BE6CC6912}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{170026AC-2180-478D-8E0A-DE5BE6CC6912}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B12C1E8-C1D2-40FF-8855-D3D5765EB334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B12C1E8-C1D2-40FF-8855-D3D5765EB334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B12C1E8-C1D2-40FF-8855-D3D5765EB334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B12C1E8-C1D2-40FF-8855-D3D5765EB334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77F7D584-48DD-42DA-846B-F2A637A62699}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77F7D584-48DD-42DA-846B-F2A637A62699}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77F7D584-48DD-42DA-846B-F2A637A62699}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77F7D584-48DD-42DA-846B-F2A637A62699}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

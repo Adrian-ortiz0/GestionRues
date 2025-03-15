@@ -1,0 +1,11 @@
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\bin\Debug\net8.0\RuesCore.deps.json
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\bin\Debug\net8.0\RuesCore.dll
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\bin\Debug\net8.0\RuesCore.pdb
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\obj\Debug\net8.0\RuesCore.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\obj\Debug\net8.0\RuesCore.AssemblyInfoInputs.cache
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\obj\Debug\net8.0\RuesCore.AssemblyInfo.cs
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\obj\Debug\net8.0\RuesCore.csproj.CoreCompileInputs.cache
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\obj\Debug\net8.0\RuesCore.dll
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\obj\Debug\net8.0\refint\RuesCore.dll
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\obj\Debug\net8.0\RuesCore.pdb
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesCore\obj\Debug\net8.0\ref\RuesCore.dll

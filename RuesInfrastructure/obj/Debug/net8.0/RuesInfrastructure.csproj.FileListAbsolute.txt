@@ -1,0 +1,17 @@
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\bin\Debug\net8.0\RuesInfrastructure.deps.json
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\bin\Debug\net8.0\RuesInfrastructure.runtimeconfig.json
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\bin\Debug\net8.0\RuesInfrastructure.dll
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\bin\Debug\net8.0\RuesInfrastructure.pdb
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\bin\Debug\net8.0\RuesCore.dll
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\bin\Debug\net8.0\RuesCore.pdb
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\RuesInfrastructure.csproj.AssemblyReference.cache
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\RuesInfrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\RuesInfrastructure.AssemblyInfoInputs.cache
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\RuesInfrastructure.AssemblyInfo.cs
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\RuesInfrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\RuesInfr.8F15A931.Up2Date
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\RuesInfrastructure.dll
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\refint\RuesInfrastructure.dll
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\RuesInfrastructure.pdb
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\RuesInfrastructure.genruntimeconfig.cache
+C:\Users\Danie\Documents\NetCoreProjects\GestionRues\RuesInfrastructure\obj\Debug\net8.0\ref\RuesInfrastructure.dll
