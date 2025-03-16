@@ -25,6 +25,12 @@ builder.Services.AddScoped<TipoDeSociedadService>();
 builder.Services.AddScoped<TipoDeOrganizacionService>();
 builder.Services.AddScoped<EstadoMatriculaService>();
 builder.Services.AddScoped<ActividadEconomicaService>();
+builder.Services.AddLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+    logging.AddDebug();
+});
 
 var app = builder.Build();
 

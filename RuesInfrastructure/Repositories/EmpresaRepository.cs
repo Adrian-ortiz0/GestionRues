@@ -104,4 +104,28 @@ public class EmpresaRepository : IEmpresaRespository
             })
             .FirstOrDefaultAsync();
     }
+
+    public async Task UpdateEmpresaResponseAsync(Empresa empresa, UpdateEmpresaDto dto)
+    {
+        await _context.Entry(empresa)
+            .Collection(e => e.ActividadesEconomicas)
+            .LoadAsync();
+        empresa.Nombre = dto.Nombre;
+        empresa.Identificacion = dto.Identificacion;
+        empresa.CategoriaDeMatricula = await _context.CategoriasDeMatriculas.FindAsync(dto.CategoriaMatriculaId);
+        empresa.TipoDeSociedad = await _context.TiposDeSociedades.FindAsync(dto.TipoDeSociedadId);
+        empresa.TipoDeOrganizacion = await _context.TiposDeOrganizaciones.FindAsync(dto.TipoDeOrganizacionId);
+        empresa.NumeroDeMatricula = Convert.ToInt32(dto.NumeroDeMatricula);
+        empresa.CamaraDeComercio = dto.CamaraDeComercio;
+        empresa.FechaDeRenovacion = dto.FechaDeRenovacion;
+        empresa.FechaDeActualizacion = dto.FechaDeActualizacion;
+        empresa.UltimoAñoRenovado = Convert.ToInt32(dto.UltimoAñoDeActualizacion);
+        empresa.EstadoMatricula = await _context.EstadosMatriculas.FindAsync(dto.EstadoMatriculaId);
+        var nuevasActividades = await _context.ActividadesEconomicas.Where(a => dto.ActividadesComercialesId.Contains(a.Id))
+            .ToListAsync();
+        empresa.ActividadesEconomicas = nuevasActividades;
+        //empresa.RepresentanteLegal.Nombre = dto.NombreRepresentanteLegal;
+        //empresa.RepresentanteLegal.Documento = dto.DocumentoRepresentanteLegal;
+        await _context.SaveChangesAsync();
+    }
 }

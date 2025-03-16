@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using RuesCore.Models.DTOs;
 using RuesCore.Models.Entities;
@@ -15,6 +16,7 @@ public class Registro : PageModel
     private readonly TipoDeOrganizacionService _tipoDeOrganizacionService;
     private readonly EstadoMatriculaService _estadoMatriculaService;
     private readonly ActividadEconomicaService _actividadEconomicaService;
+    private readonly ILogger<Registro> _logger;
 
     public Registro(EmpresaService empresaService, 
         TipoDocumentoService tipoDocumentoService, 
@@ -22,7 +24,8 @@ public class Registro : PageModel
         TipoDeSociedadService tipoDeSociedadService,
         TipoDeOrganizacionService tipoDeOrganizacionService,
         EstadoMatriculaService estadoMatriculaService,
-        ActividadEconomicaService actividadEconomicaService)
+        ActividadEconomicaService actividadEconomicaService,
+        ILogger<Registro> logger)
     {
         _empresaService = empresaService;
         _tipoDocumentoService = tipoDocumentoService;
@@ -31,6 +34,7 @@ public class Registro : PageModel
         _tipoDeOrganizacionService = tipoDeOrganizacionService;
         _estadoMatriculaService = estadoMatriculaService;
         _actividadEconomicaService = actividadEconomicaService;
+        _logger = logger;
     }
 
     public async Task<IActionResult> OnGetEmpresasAsync()
@@ -44,8 +48,7 @@ public class Registro : PageModel
         var empresas = await _empresaService.GetAllEmpresasResponseAsync();
         return new JsonResult(empresas);
     }
-    
-    // GET: /Registro?handler=EmpresaById&id=1
+
     public async Task<IActionResult> OnGetEmpresaByIdAsync([FromQuery] int id)
     {
         var empresa = await _empresaService.GetEmpresaAsync(id);
@@ -67,27 +70,22 @@ public class Registro : PageModel
         return new JsonResult(new { message = "Empresa y representante registrados correctamente" });
     }
     
-    // POST: /Registro?handler=UpdateEmpresa
-    // Simula un PUT para actualizar. Recibe el objeto Empresa en el body.
-    public async Task<IActionResult> OnPostUpdateEmpresaAsync([FromBody] Empresa empresa)
+    public async Task<IActionResult> OnPostUpdateEmpresa([FromBody] UpdateEmpresaDto dto)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
+        try {
+            await _empresaService.UpdateEmpresaResponseAsync(dto);
+            return new JsonResult(new { success = true, message = "Empresa actualizada correctamente" });
         }
-        await _empresaService.UpdateEmpresaAsync(empresa);
-        return new JsonResult(new { message = "Empresa actualizada correctamente" });
+        catch (Exception ex) {
+            return BadRequest(new { error = ex.Message });
+        }
     }
 
-    // POST: /Registro?handler=DeleteEmpresa&id=1
-    // Simula un DELETE usando POST y enviando el id por query string.
     public async Task<IActionResult> OnPostDeleteEmpresaAsync([FromQuery] int id)
     {
         await _empresaService.DeleteEmpresaAsync(id);
         return new JsonResult(new { message = "Empresa eliminada correctamente" });
     }
-
-    // Tipos de documento Uso del handler?
     public async Task<IActionResult> OnGetTiposDocumentosAsync()
     {
         var tiposDeDocumentos = await _tipoDocumentoService.GetTiposDeDocumentosAsync();
@@ -99,8 +97,7 @@ public class Registro : PageModel
         var tipoDocumento = await _tipoDocumentoService.GetTipoDocumentoByIdAsync(id);
         return new JsonResult(tipoDocumento);
     }
-    
-    //Categoria de matricula
+
     public async Task<IActionResult> OnGetCategoriaDeMatriculaAsync()
     {
         var categoriasDeMatricula = await _categoriaDeMatriculaService.GetAllCategoriaDeMatriculaAsync();
@@ -112,8 +109,7 @@ public class Registro : PageModel
         var categoriaDeMatricula = await _categoriaDeMatriculaService.GetCategoriaDeMatriculaByIdAsync(id);
         return new JsonResult(categoriaDeMatricula);
     }
-    
-    // Tipo de sociedad
+
     public async Task<IActionResult> OnGetTiposDeSociedadAsync()
     {
         var tiposDeSociedad = await _tipoDeSociedadService.GetAllTiposDeSociedadesAsync();
@@ -125,8 +121,7 @@ public class Registro : PageModel
         var tipoDeSociedad = await _tipoDeSociedadService.GetTipoDeSociedadByIdAsync(id);
         return new JsonResult(tipoDeSociedad);
     }
-    
-    //Tipo de Organizacion
+
     public async Task<IActionResult> OnGetTiposDeOrganizacionAsync()
     {
         var tiposDeOrganizacion = await _tipoDeOrganizacionService.ObtenerTiposDeOrganizacionAsync();
@@ -138,8 +133,7 @@ public class Registro : PageModel
         var tipoDeSociedad = await _tipoDeOrganizacionService.ObtenerTipoDeOrganizacionByIdAsync(id);
         return new JsonResult(tipoDeSociedad);
     }
-    
-    // Estados de matricula
+
     public async Task<IActionResult> OnGetEstadosMatriculaAsync()
     {
         var estadosMatricula = await _estadoMatriculaService.GetAllEstadosMatriculaAsync();
@@ -151,8 +145,7 @@ public class Registro : PageModel
         var estadoMatricula = await _estadoMatriculaService.GetEstadoMatriculaByIdAsync(id);
         return new JsonResult(estadoMatricula);
     }
-    
-    // Actividades economicas
+
     public async Task<IActionResult> OnGetActividadesEconomicasAsync()
     {
         var actividadesEconomicas = await _actividadEconomicaService.GetAllActividadEconomicaAsync();

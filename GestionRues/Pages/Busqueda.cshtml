@@ -4,109 +4,278 @@
     Layout = "Shared/_Layout";
 }
 
-<div id="data-table"></div>
+<div id="gridContainer"></div>
+<div id="popupContainer"></div>
 
 @section Scripts {
     <script>
+        function formatDateForServer(date) {
+            if (!date) return null;
+            const d = new Date(date);
+            return d.toISOString().split('.')[0]; 
+        }
+        var editFormInstance = null;
+        var categorias = [];
+        var tiposSociedad = [];
+        var tiposOrganizacion = [];
+        var estadosMatricula = [];
+        var actividadesEconomicas = [];
+
         $(function(){
-            $("#data-table").dxDataGrid({
+            var formContainer = $("<div>").dxForm({
+                formData: {},
+                items: [
+                    { dataField: "id", visible: false },
+                    {
+                        dataField: "identificacion",
+                        label: { text: "Identificación" },
+                        editorOptions: { readOnly: true }
+                    },
+                    {
+                        dataField: "nombre",
+                        label: { text: "Nombre" },
+                        validationRules: [{ type: "required" }]
+                    },
+                    {
+                        dataField: "categoriaMatriculaId",
+                        label: { text: "Categoría Matrícula" },
+                        editorType: "dxSelectBox",
+                        editorOptions: {
+                            dataSource: categorias,
+                            displayExpr: "nombre",
+                            valueExpr: "id"
+                        }
+                    },
+                    {
+                        dataField: "tipoDeSociedadId",
+                        label: { text: "Tipo de Sociedad" },
+                        editorType: "dxSelectBox",
+                        editorOptions: {
+                            dataSource: tiposSociedad,
+                            displayExpr: "nombre",
+                            valueExpr: "id"
+                        }
+                    },
+                    {
+                        dataField: "tipoDeOrganizacionId",
+                        label: { text: "Tipo de Organización" },
+                        editorType: "dxSelectBox",
+                        editorOptions: {
+                            dataSource: tiposOrganizacion,
+                            displayExpr: "nombre",
+                            valueExpr: "id"
+                        }
+                    },
+                    {
+                        dataField: "numeroDeMatricula",
+                        label: { text: "Número de Matrícula" },
+                        validationRules: [{ type: "required" }]
+                    },
+                    {
+                        dataField: "camaraDeComercio",
+                        label: { text: "Cámara de Comercio" }
+                    },
+                    {
+                        dataField: "fechaDeRenovacion",
+                        label: { text: "Fecha de Renovación" },
+                        editorType: "dxDateBox",
+                        editorOptions: {
+                            displayFormat: "dd/MM/yyyy",
+                            type: "date"
+                        }
+                    },
+                    {
+                        dataField: "fechaDeActualizacion",
+                        label: { text: "Fecha de Actualización" },
+                        editorType: "dxDateBox",
+                        editorOptions: {
+                            displayFormat: "dd/MM/yyyy",
+                            type: "date"
+                        }
+                    },
+                    {
+                        dataField: "ultimoAñoDeActualizacion",
+                        label: { text: "Último año de Actualización" },
+                        validationRules: [{ type: "required" }]
+                    },
+                    {
+                        dataField: "estadoMatriculaId",
+                        label: { text: "Estado Matrícula" },
+                        editorType: "dxSelectBox",
+                        editorOptions: {
+                            dataSource: estadosMatricula,
+                            displayExpr: "nombre",
+                            valueExpr: "id"
+                        }
+                    },
+                    {
+                        dataField: "actividadesComercialesId",
+                        label: { text: "Actividades Comerciales" },
+                        editorType: "dxTagBox",
+                        editorOptions: {
+                            dataSource: actividadesEconomicas,
+                            displayExpr: "nombre",
+                            valueExpr: "id",
+                            searchEnabled: true,
+                            value: []
+                        }
+                    }
+                ]
+            });
+
+            editFormInstance = formContainer.dxForm("instance");
+
+            $("#popupContainer").dxPopup({
+                title: "Editar Empresa",
+                visible: false,
+                width: 800,
+                dragEnabled: true,
+                contentTemplate: function(contentElement) {
+                    contentElement.append(formContainer);
+                },
+                toolbarItems: [
+                    {
+                        widget: "dxButton",
+                        toolbar: "bottom",
+                        options: {
+                            text: "Guardar",
+                            type: "success",
+                            onClick: function () {
+                                const formData = editFormInstance.option("formData");
+
+                                if (!formData.nombre || !formData.numeroDeMatricula) {
+                                    DevExpress.ui.notify("Complete los campos requeridos", "error", 2000);
+                                    return;
+                                }
+
+                                const dataToSend = {
+                                    id: formData.id,
+                                    identificacion: formData.identificacion,
+                                    nombre: formData.nombre,
+                                    categoriaMatriculaId: formData.categoriaMatriculaId,
+                                    tipoDeSociedadId: formData.tipoDeSociedadId,
+                                    tipoDeOrganizacionId: formData.tipoDeOrganizacionId,
+                                    numeroDeMatricula: String(formData.numeroDeMatricula),
+                                    camaraDeComercio: formData.camaraDeComercio,
+                                    fechaDeRenovacion: formatDateForServer(formData.fechaDeRenovacion),
+                                    fechaDeActualizacion: formatDateForServer(new Date()),
+                                    ultimoAñoDeActualizacion: formData.ultimoAñoDeActualizacion,
+                                    estadoMatriculaId: formData.estadoMatriculaId,
+                                    actividadesComercialesId: formData.actividadesComercialesId || []
+                                };
+                                console.log("JSON enviado:", JSON.stringify(dataToSend, null, 2));
+
+                                $.ajax({
+                                    url: "/Registro?handler=UpdateEmpresa",
+                                    type: "POST",
+                                    contentType: "application/json",
+                                    headers: {
+                                        "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                                    },
+                                    data: JSON.stringify(dataToSend),
+                                    success: function (response) {
+                                        $("#gridContainer").dxDataGrid("instance").refresh();
+                                        $("#popupContainer").dxPopup("instance").hide();
+                                        DevExpress.ui.notify("Actualización exitosa", "success", 2000);
+                                    },
+                                    error: function (xhr) {
+                                        const errorMsg = xhr.responseJSON?.error
+                                            || "Error en la actualización: " + xhr.statusText;
+                                        DevExpress.ui.notify(errorMsg, "error", 3000);
+                                    }
+                                });
+                            }
+                        }
+                    },
+                    {
+                        widget: "dxButton",
+                        toolbar: "bottom",
+                        options: {
+                            text: "Cancelar",
+                            onClick: function () {
+                                $("#popupContainer").dxPopup("instance").hide();
+                            }
+                        }
+                    }
+                ],
+                onHidden: function() {
+                    editFormInstance.resetValues(); 
+                }
+            });
+
+            $.when(
+                $.get("/Registro?handler=TiposDeSociedad"),
+                $.get("/Registro?handler=CategoriaDeMatricula"),
+                $.get("/Registro?handler=TiposDeOrganizacion"),
+                $.get("/Registro?handler=EstadosMatricula"),
+                $.get("/Registro?handler=ActividadesEconomicas")
+            ).done(function(res1, res2, res3, res4, res5) {
+                tiposSociedad = res1[0];
+                categorias = res2[0];
+                tiposOrganizacion = res3[0];
+                estadosMatricula = res4[0];
+                actividadesEconomicas = res5[0];
+
+                editFormInstance.getEditor("categoriaMatriculaId").option("dataSource", categorias);
+                editFormInstance.getEditor("tipoDeSociedadId").option("dataSource", tiposSociedad);
+                editFormInstance.getEditor("tipoDeOrganizacionId").option("dataSource", tiposOrganizacion);
+                editFormInstance.getEditor("estadoMatriculaId").option("dataSource", estadosMatricula);
+                editFormInstance.getEditor("actividadesComercialesId").option("dataSource", actividadesEconomicas);
+            });
+            
+            $("#gridContainer").dxDataGrid({
                 dataSource: "/Busqueda?handler=EmpresasResponse",
                 keyExpr: "id",
                 columnAutoWidth: true,
                 rowAlternationEnabled: true,
                 showBorders: true,
-                paging: {
-                    pageSize: 10
-                },
-                pager: {
-                    showPageSizeSelector: true,
-                    allowedPageSizes: [5, 10, 20]
-                },
-                filterRow: {
-                    visible: true,
-                    applyFilter: "auto"
-                },
-                searchPanel: {
-                    visible: true,
-                    placeholder: "Buscar..."
-                },
-                headerFilter: {
-                    visible: true
-                },
-                grouping: {
-                    autoExpandAll: false
-                },
+                paging: { pageSize: 10 },
+                filterRow: { visible: true, applyFilter: "auto" },
+                searchPanel: { visible: true, placeholder: "Buscar..." },
                 columns: [
-                    {
-                        dataField: "identificacion",
-                        caption: "Identificación",
-                        width: 120
-                    },
-                    {
-                        dataField: "nombre",
-                        caption: "Nombre",
-                        minWidth: 200
-                    },
-                    {
-                        dataField: "categoriaDeMatricula",
-                        caption: "Categoría Matrícula",
-                        width: 150
-                    },
-                    {
-                        dataField: "tipoDeSociedad",
-                        caption: "Tipo Sociedad",
-                        width: 130
-                    },
-                    {
-                        dataField: "numeroDeMatricula",
-                        caption: "N° Matrícula",
-                        width: 120
-                    },
-                    {
-                        dataField: "fechaDeMatricula",
-                        caption: "Fecha Matrícula",
-                        dataType: "date",
-                        format: "dd/MM/yyyy",
-                        width: 130
-                    },
-                    {
-                        dataField: "estadoMatricula",
-                        caption: "Estado",
-                        width: 100,
-                        allowHiding: false
-                    },
-                    {
-                        dataField: "actividadesEconomicas",
-                        caption: "Actividades",
-                        minWidth: 250,
-                        wordWrapEnabled: true
-                    },
+                    { dataField: "identificacion", caption: "Identificación", width: 120 },
+                    { dataField: "nombre", caption: "Nombre", minWidth: 200 },
+                    { dataField: "categoriaDeMatricula", caption: "Categoría Matrícula", width: 150 },
+                    { dataField: "tipoDeSociedad", caption: "Tipo Sociedad", width: 130 },
+                    { dataField: "numeroDeMatricula", caption: "N° Matrícula", width: 120 },
+                    { dataField: "fechaDeMatricula", caption: "Fecha Matrícula", dataType: "date", format: "dd/MM/yyyy", width: 130 },
+                    { dataField: "estadoMatricula", caption: "Estado", width: 100 },
+                    { dataField: "actividadesEconomicas", caption: "Actividades Económicas", minWidth: 250 },
+                    { dataField: "representanteLegal", caption: "Representante Legal", minWidth: 150 },
+                    { dataField: "representanteLegalDocumento", caption: "Documento Representante", width: 120 },
                     {
                         caption: "Acciones",
-                        width: 100,
+                        width: 150,
                         type: "buttons",
                         buttons: [{
                             hint: "Editar",
                             icon: "edit",
                             onClick: function(e) {
-                                const id = e.row.data.id;
-                                window.location.href = `/Registro?handler=EmpresaById&id=${id}`;
+                                var rowData = e.row.data;
+                                var popupInstance = $("#popupContainer").dxPopup("instance");
+                                popupInstance.option("title", "Editar Empresa: " + rowData.nombre);
+                                if (editFormInstance) {
+                                    editFormInstance.option("formData", rowData);
+                                } else {
+                                    DevExpress.ui.notify("El formulario no está inicializado", "error", 2000);
+                                }
+                                popupInstance.show();
                             }
                         }, {
                             hint: "Eliminar",
                             icon: "trash",
                             type: "danger",
                             onClick: function(e) {
-                                const id = e.row.data.id;
+                                var id = e.row.data.id;
                                 DevExpress.ui.dialog.confirm("¿Está seguro de eliminar esta empresa?", "Confirmar eliminación")
                                     .done(function(result) {
                                         if(result) {
                                             $.ajax({
-                                                url: `/Registro?handler=DeleteEmpresa&id=${id}`,
-                                                method: "POST"
-                                            }).done(function() {
-                                                DevExpress.ui.notify("Empresa eliminada correctamente", "success", 2000);
-                                                e.component.refresh();
+                                                url: "/Registro?handler=DeleteEmpresa&id=" + id,
+                                                type: "POST"
+                                            }).done(function(response) {
+                                                DevExpress.ui.notify(response.message, "success", 2000);
+                                                $("#gridContainer").dxDataGrid("instance").refresh();
                                             }).fail(function() {
                                                 DevExpress.ui.notify("Error al eliminar la empresa", "error", 2000);
                                             });
@@ -117,28 +286,23 @@
                     }
                 ],
                 toolbar: {
-                    items: [
-                        {
-                            location: 'before',
-                            widget: 'dxButton',
-                            options: {
-                                text: 'Nueva Empresa',
-                                icon: 'add',
-                                onClick: function() {
-                                    window.location.href = '/Registro';
-                                }
+                    items: [{
+                        location: 'before',
+                        widget: 'dxButton',
+                        options: {
+                            text: 'Nueva Empresa',
+                            icon: 'add',
+                            onClick: function() {
+                                window.location.href = '/Registro';
                             }
-                        },
-                        'searchPanel'
-                    ]
+                        }
+                    }, 'searchPanel']
                 },
                 allowColumnResizing: true,
                 allowColumnReordering: true,
-                columnChooser: {
-                    enabled: true,
-                    mode: 'dragAndDrop'
-                }
+                columnChooser: { enabled: true, mode: 'dragAndDrop' }
             });
         });
+    
     </script>
 }

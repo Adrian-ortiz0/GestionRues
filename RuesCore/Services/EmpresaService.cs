@@ -51,6 +51,16 @@ public class EmpresaService
         return await _empresaRepository.GetEmpresaResponseByNombreAsync(nombre);
     }
 
+    public async Task UpdateEmpresaResponseAsync(UpdateEmpresaDto dto)
+    {
+        var empresa = await _empresaRepository.GetEmpresaByIdAsync(dto.Id);
+        
+        if (empresa == null)
+            throw new KeyNotFoundException("Empresa no encontrada");
+        
+        await _empresaRepository.UpdateEmpresaResponseAsync(empresa, dto);
+    }
+
 public async Task AddEmpresaConRepresentanteAsync(EmpresaConRepresentanteLegalDto dto)
     {
     
@@ -97,11 +107,6 @@ public async Task AddEmpresaConRepresentanteAsync(EmpresaConRepresentanteLegalDt
 
     await _empresaRepository.AddEmpresaAsync(empresa);
 }
-
-    public async Task UpdateEmpresaAsync(Empresa empresa)
-    {
-        await _empresaRepository.UpdateEmpresaAsync(empresa);
-    }
 
     public async Task DeleteEmpresaAsync(int id)
     {

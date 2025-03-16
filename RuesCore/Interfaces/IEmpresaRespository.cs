@@ -9,7 +9,7 @@ public interface IEmpresaRespository
     Task<IEnumerable<EmpresaResponseDto>> GetAllEmpresasResponseAsync();
     Task<Empresa> GetEmpresaByIdAsync(int id);
     Task AddEmpresaAsync(Empresa empresa);
-    Task UpdateEmpresaAsync(Empresa empresa);
     Task DeleteEmpresaAsync(int id);
     Task<EmpresaResponseDto> GetEmpresaResponseByNombreAsync(string nombre);
+    Task UpdateEmpresaResponseAsync(Empresa empresa, UpdateEmpresaDto dto);
 }

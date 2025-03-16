@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RuesInfrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+49140144d43df7d75098d03212e95f44d8e3111c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d8b3d64b1ebd61a02ab7802e02c9a9e5f1f2c215")]
 [assembly: System.Reflection.AssemblyProductAttribute("RuesInfrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RuesInfrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
